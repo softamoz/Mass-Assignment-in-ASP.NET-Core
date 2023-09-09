@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/src/MassAssignmentDemo.BlazorWebApp/appsettings.Development.json
+/src/MassAssignmentDemo.BlazorWebApp/appsettings.json
