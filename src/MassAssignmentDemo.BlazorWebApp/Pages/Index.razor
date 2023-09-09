@@ -1,0 +1,52 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject List<Person> PersonList
+
+<PageTitle>Home</PageTitle>
+
+
+<h3>Add new Person</h3>
+
+<EditForm Model="PersonToAdd" OnValidSubmit="HandleValidSubmit" FormName="AddPerson">
+	<div class="mb-3">
+		<label for="name" class="form-label">Name: </label>
+		<InputText @bind-Value="PersonToAdd.Name" class="form-control" />
+	</div>
+	<div class="mb-3">
+		<label for="family" class="form-label">Family: </label>
+		<InputText @bind-Value="PersonToAdd.Family" class="form-control" />
+	</div>
+
+	<button type="submit" class="btn btn-primary" @onclick="@HandleValidSubmit">Submit</button>
+</EditForm>
+
+<hr />
+
+<QuickGrid Items="@PersonList.AsQueryable()">
+	<PropertyColumn Property="@(p => p.Name)" Sortable="true" />
+	<PropertyColumn Property="@(p => p.Family)" Sortable="true" />
+	<PropertyColumn Property="@(p => p.IsAdmin)" Sortable="true" />
+</QuickGrid>
+
+
+
+@code {
+
+	[SupplyParameterFromForm]
+	public Person PersonToAdd { get; set; } = new();
+
+
+	private void HandleValidSubmit()
+	{
+		PersonList.Add(PersonToAdd);
+		PersonToAdd = new();
+	}
+
+
+	public class Person
+	{
+		public string? Name { get; set; }
+		public string? Family { get; set; }
+		public bool? IsAdmin { get; set; }
+	}
+}
